@@ -23,7 +23,8 @@ body{
 .container{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-pad)}
 .site-header{background:transparent;padding:0.8rem 0;position:sticky;top:0;z-index:30}
 .header-inner{display:flex;align-items:center;justify-content:space-between}
-.brand{font-weight:700;color:var(--brand-600);text-decoration:none;font-size:1.1rem}
+.brand{font-weight:700;color:var(--brand-600);text-decoration:none;font-size:1.1rem;display:flex;align-items:center;gap:0.5rem}
+.logo{height:40px;width:auto}
 .nav{display:flex;gap:1rem}
 .nav a{color:var(--muted);text-decoration:none;padding:0.35rem 0.5rem;border-radius:8px;transition:background .18s, color .18s}
 .nav a:hover{background:rgba(59,130,246,0.08);color:var(--brand-600)}
@@ -76,7 +77,8 @@ body{
 
 /* Utilities */
 h2{margin:0 0 .9rem}
-img{max-width:100%;height:auto;display:block}
+img{max-width:100%;height:auto;display:block;transition:transform 0.3s ease}
+img:hover{transform:scale(1.05)}
 
 /* Responsive */
 @media (max-width:980px){
