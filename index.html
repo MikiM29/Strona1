@@ -1,113 +1,44 @@
-
 <!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Cukiernia Ryszard Gembiak</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="cukiernia.css">
+  <title>Oferta — Cukiernia Ryszard Gembiak</title>
+  <link rel="stylesheet" href="../cukiernia.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="#">Cukiernia Ryszard Gembiak</a>
+      <a class="brand" href="../index.html">Cukiernia Ryszard Gembiak</a>
       <nav class="nav">
-        <a href="#about">O nas</a>
-        <a href="oferta/index.html">Oferta</a>
-        <a href="information">Informacje</a>
-        <a href="#gallery">Galeria</a>
-        <a href="#contact">Kontakt</a>
+        <a href="../index.html">Strona główna</a>
+        <a href="../index.html#menu">Menu</a>
+        <a href="../index.html#gallery">Galeria</a>
+        <a href="../index.html#contact">Kontakt</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-inner">
-        <div class="hero-text">
-          <h1>Świeże wypieki codziennie</h1>
-          <p>Domowe smaki, najlepsze składniki i miłość do pieczenia. Zapraszamy do Cukierni Ryszard Gembiak.</p>
-          <div class="hero-cta">
-            <a class="btn primary" href="#menu">Zobacz Menu</a>
-            <a class="btn ghost" href="#contact">Zamów online</a>
-          </div>
-        </div>
-        <div class="hero-art">
-          <img src="images/bread.svg" alt="Wypieki" class="hero-img">
-        </div>
-      </div>
+  <main class="container" style="padding:2rem 0">
+    <a href="../index.html" style="color:var(--brand-600);text-decoration:none">← Powrót</a>
+    <h1>Oferta</h1>
+    <p>Wybierz jedną z naszych ofert. Możesz dodać własne pliki PDF do katalogu <strong>/pdfs</strong> (np. <em>menu.pdf</em>, <em>cennik.pdf</em>).</p>
+
+    <section style="margin-top:1rem">
+      <h2>Broszury i cenniki</h2>
+      <ul>
+        <li>Menu wypieków — <a href="../pdfs/menu.pdf" target="_blank">Otwórz</a> · <a href="../pdfs/menu.pdf" download>Pobierz</a></li>
+        <li>Cennik zamówień okolicznościowych — <a href="../pdfs/cennik.pdf" target="_blank">Otwórz</a> · <a href="../pdfs/cennik.pdf" download>Pobierz</a></li>
+      </ul>
     </section>
 
-    <section id="about" class="about container">
-      <h2>O nas</h2>
-      <div class="about-grid">
-        <p>Jesteśmy rodzinną cukiernią serwującą świeże chleb, bułki i ciasta. Tradycyjne receptury spotykają się u nas z nowoczesnym designem i dbałością o każdy detal.</p>
-        <div class="about-highlights">
-          <div class="pill">Świeże składniki</div>
-          <div class="pill">Ręczne wypieki</div>
-          <div class="pill">Zamówienia na zamówienie</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="menu" class="menu container">
-      <h2>Najpopularniejsze</h2>
-      <div class="cards">
-        <article class="card">
-          <img src="images/cake.svg" alt="Ciasto" />
-          <h3>Sernik klasyczny</h3>
-          <p>Kremowy sernik na tradycyjnym spodzie.</p>
-        </article>
-        <article class="card">
-          <img src="images/bread.svg" alt="Chleb" />
-          <h3>Chleb na zakwasie</h3>
-          <p>Chleb z chrupiącą skórką i miękkim miąższem.</p>
-        </article>
-        <article class="card">
-          <img src="images/cake.svg" alt="Bułki" />
-          <h3>Rogaliki maślane</h3>
-          <p>Delikatne, maślane rogaliki idealne do kawy.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="gallery" class="gallery container">
-      <h2>Galeria</h2>
-      <div class="gallery-grid">
-        <img src="images/bread.svg" alt="Wypiek 1">
-        <img src="images/cake.svg" alt="Wypiek 2">
-        <img src="images/bread.svg" alt="Wypiek 3">
-        <img src="images/cake.svg" alt="Wypiek 4">
-      </div>
-    </section>
-
-    <section id="contact" class="contact container">
-      <h2>Kontakt</h2>
-      <div class="contact-grid">
-        <form class="contact-form" action="#" onsubmit="return false;">
-          <label><span>Imię</span><input type="text" name="name" required></label>
-          <label><span>Email</span><input type="email" name="email" required></label>
-          <label><span>Wiadomość</span><textarea name="message" rows="4" required></textarea></label>
-          <button class="btn primary">Wyślij</button>
-        </form>
-        <div class="contact-info">
-          <p><strong>Adres:</strong> ul. Przykładowa 12, 00-000 Miasto</p>
-          <p><strong>Telefon:</strong> +48 123 456 789</p>
-          <p><strong>Godziny:</strong> Pon–Pt 7:00–18:00, Sob 8:00–14:00</p>
-        </div>
+    <section style="margin-top:1.2rem">
+      <h2>Podgląd (jeśli plik PDF jest dostępny)</h2>
+      <div style="background:var(--card);padding:.5rem;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04)">
+        <iframe src="../pdfs/menu.pdf" width="100%" height="600" style="border:none;border-radius:8px"></iframe>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> Cukiernia Ryszard Gembiak — Wszystkie prawa zastrzeżone</p>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
