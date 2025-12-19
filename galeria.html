@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Galeria — Cukiernia Ryszard Gembiak</title>
+  <link rel="stylesheet" href="../cukiernia.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">
+        <img src="../images/logo.png" alt="Logo Cukierni Ryszard Gembiak" class="logo">
+        Cukiernia Ryszard Gembiak
+      </a>
+      <nav class="nav">
+        <a href="../index.html">Strona główna</a>
+        <a href="../oferta/index.html">Oferta</a>
+        <a href="../index.html#about">O nas</a>
+        <a href="../index.html#contact">Kontakt</a>
+      </nav>
+      <button id="theme-toggle" class="theme-btn">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding:2rem 0">
+    <a href="../index.html" style="color:var(--brand-600);text-decoration:none">← Powrót</a>
+    <h1>Galeria</h1>
+    <p>Zapraszamy do obejrzenia naszych wypieków i atmosfery cukierni.</p>
+
+    <section style="margin-top:1rem">
+      <h2>Nasze wypieki</h2>
+      <div class="gallery-grid">
+        <img src="../images/cake1.svg" alt="Ciasto 1">
+        <img src="../images/cake2.svg" alt="Ciasto 2">
+        <img src="../images/bread1.svg" alt="Chleb 1">
+        <img src="../images/bread2.svg" alt="Chleb 2">
+        <img src="../images/pastry1.svg" alt="Wypiek 1">
+        <img src="../images/pastry2.svg" alt="Wypiek 2">
+        <img src="../images/cake3.svg" alt="Ciasto 3">
+        <img src="../images/bread3.svg" alt="Chleb 3">
+      </div>
+    </section>
+
+    <section style="margin-top:1.2rem">
+      <h2>Atmosfera cukierni</h2>
+      <div class="gallery-grid">
+        <img src="../images/interior1.svg" alt="Wnętrze 1">
+        <img src="../images/interior2.svg" alt="Wnętrze 2">
+        <img src="../images/interior3.svg" alt="Wnętrze 3">
+        <img src="../images/interior4.svg" alt="Wnętrze 4">
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      body.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    } else {
+      themeToggle.textContent = '🌙';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const theme = body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Smooth page transitions
+    document.addEventListener('DOMContentLoaded', () => {
+      body.classList.add('fade-in');
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && !href.startsWith('http') && !href.startsWith('#') && !href.includes('target="_blank"')) {
+            e.preventDefault();
+            body.classList.add('fade-out');
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

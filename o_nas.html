@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>O nas — Cukiernia Ryszard Gembiak</title>
+  <link rel="stylesheet" href="../cukiernia.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">
+        <img src="../images/logo.png" alt="Logo Cukierni Ryszard Gembiak" class="logo">
+        Cukiernia Ryszard Gembiak
+      </a>
+      <nav class="nav">
+        <a href="../index.html">Strona główna</a>
+        <a href="../oferta/index.html">Oferta</a>
+        <a href="../galeria/index.html">Galeria</a>
+        <a href="../kontakt/index.html">Kontakt</a>
+      </nav>
+      <button id="theme-toggle" class="theme-btn">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding:2rem 0">
+    <a href="../index.html" style="color:var(--brand-600);text-decoration:none">← Powrót</a>
+    <h1>O nas</h1>
+    <p>Poznaj historię naszej cukierni i to, co nas wyróżnia.</p>
+
+    <section style="margin-top:1rem">
+      <div class="about-grid">
+        <div>
+          <h2>Nasza historia</h2>
+          <p>Cukiernia Ryszard Gembiak została założona w 1990 roku przez Ryszarda Gembiaka, pasjonata pieczenia chleba i ciast. Od pokoleń rodzina Gembiak przekazuje tajniki tradycyjnych receptur, łącząc je z nowoczesnymi technikami.</p>
+          <p>Dziś nasza cukiernia to miejsce, gdzie świeże wypieki spotykają się z gościnną atmosferą. Używamy tylko najlepszych składników, a każdy produkt jest przygotowywany z miłością i dbałością o detal.</p>
+          <div class="about-highlights" style="margin-top:1rem;">
+            <div class="pill">Świeże składniki</div>
+            <div class="pill">Ręczne wypieki</div>
+            <div class="pill">Tradycyjne receptury</div>
+            <div class="pill">Rodzina od pokoleń</div>
+          </div>
+        </div>
+        <div>
+          <img src="../images/about.svg" alt="Zdjęcie cukierni" style="width:100%;border-radius:12px;">
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:1.5rem">
+      <h2>Nasz zespół</h2>
+      <div class="cards">
+        <article class="card">
+          <img src="../images/chef1.svg" alt="Szef kuchni" />
+          <h3>Ryszard Gembiak</h3>
+          <p>Założyciel i główny piekarz z 30-letnim doświadczeniem.</p>
+        </article>
+        <article class="card">
+          <img src="../images/chef2.svg" alt="Piekarz" />
+          <h3>Anna Kowalska</h3>
+          <p>Specjalistka od ciast i deserów.</p>
+        </article>
+        <article class="card">
+          <img src="../images/chef3.svg" alt="Sprzedawca" />
+          <h3>Marek Nowak</h3>
+          <p>Opiekuje się obsługą klientów i sprzedażą.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      body.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    } else {
+      themeToggle.textContent = '🌙';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const theme = body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Smooth page transitions
+    document.addEventListener('DOMContentLoaded', () => {
+      body.classList.add('fade-in');
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && !href.startsWith('http') && !href.startsWith('#') && !href.includes('target="_blank"')) {
+            e.preventDefault();
+            body.classList.add('fade-out');
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

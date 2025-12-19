@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Oferta — Cukiernia Ryszard Gembiak</title>
+  <link rel="stylesheet" href="../cukiernia.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">
+        <img src="../images/logo.png" alt="Logo Cukierni Ryszard Gembiak" class="logo">
+        Cukiernia Ryszard Gembiak
+      </a>
+      <nav class="nav">
+        <a href="../index.html">Strona główna</a>
+        <a href="../index.html#menu">Menu</a>
+        <a href="../index.html#gallery">Galeria</a>
+        <a href="../index.html#contact">Kontakt</a>
+      </nav>
+      <button id="theme-toggle" class="theme-btn">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding:2rem 0">
+    <a href="../index.html" style="color:var(--brand-600);text-decoration:none">← Powrót</a>
+    <h1>Oferta</h1>
+    <p>Wybierz jedną z naszych ofert. Możesz dodać własne pliki PDF do katalogu <strong>/pdfs</strong> (np. <em>menu.pdf</em>, <em>cennik.pdf</em>).</p>
+
+    <section style="margin-top:1rem">
+      <h2>Broszury i cenniki</h2>
+      <ul>
+        <li>Menu wypieków — <a href="../pdfs/menu.pdf" target="_blank">Otwórz</a> · <a href="../pdfs/menu.pdf" download>Pobierz</a></li>
+        <li>Cennik zamówień okolicznościowych — <a href="../pdfs/cennik.pdf" target="_blank">Otwórz</a> · <a href="../pdfs/cennik.pdf" download>Pobierz</a></li>
+      </ul>
+    </section>
+
+    <section style="margin-top:1.2rem">
+      <h2>Podgląd (jeśli plik PDF jest dostępny)</h2>
+      <div style="background:var(--card);padding:.5rem;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04)">
+        <iframe src="../pdfs/menu.pdf" width="100%" height="600" style="border:none;border-radius:8px"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      body.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    } else {
+      themeToggle.textContent = '🌙';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const theme = body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Smooth page transitions
+    document.addEventListener('DOMContentLoaded', () => {
+      body.classList.add('fade-in');
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && !href.startsWith('http') && !href.startsWith('#') && !href.includes('target="_blank"')) {
+            e.preventDefault();
+            body.classList.add('fade-out');
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

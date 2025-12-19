@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kontakt — Cukiernia Ryszard Gembiak</title>
+  <link rel="stylesheet" href="../cukiernia.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html">
+        <img src="../images/logo.png" alt="Logo Cukierni Ryszard Gembiak" class="logo">
+        Cukiernia Ryszard Gembiak
+      </a>
+      <nav class="nav">
+        <a href="../index.html">Strona główna</a>
+        <a href="../oferta/index.html">Oferta</a>
+        <a href="../galeria/index.html">Galeria</a>
+        <a href="../o-nas/index.html">O nas</a>
+      </nav>
+      <button id="theme-toggle" class="theme-btn">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding:2rem 0">
+    <a href="../index.html" style="color:var(--brand-600);text-decoration:none">← Powrót</a>
+    <h1>Kontakt</h1>
+    <p>Skontaktuj się z nami, aby złożyć zamówienie lub zapytać o coś.</p>
+
+    <section style="margin-top:1rem">
+      <div class="contact-grid">
+        <form class="contact-form" action="#" onsubmit="return false;">
+          <label><span>Imię</span><input type="text" name="name" required></label>
+          <label><span>Email</span><input type="email" name="email" required></label>
+          <label><span>Telefon</span><input type="tel" name="phone"></label>
+          <label><span>Wiadomość</span><textarea name="message" rows="4" required></textarea></label>
+          <button class="btn primary">Wyślij</button>
+        </form>
+        <div class="contact-info">
+          <h3>Informacje kontaktowe</h3>
+          <p><strong>Adres:</strong> ul. Przykładowa 12, 00-000 Miasto</p>
+          <p><strong>Telefon:</strong> +48 123 456 789</p>
+          <p><strong>Email:</strong> kontakt@cukiernia.pl</p>
+          <p><strong>Godziny otwarcia:</strong></p>
+          <ul>
+            <li>Poniedziałek - Piątek: 7:00 - 18:00</li>
+            <li>Sobota: 8:00 - 14:00</li>
+            <li>Niedziela: Zamknięte</li>
+          </ul>
+          <img src="../images/map.svg" alt="Mapa dojazdu" style="width:100%;border-radius:8px;margin-top:1rem;">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      body.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    } else {
+      themeToggle.textContent = '🌙';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const theme = body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Smooth page transitions
+    document.addEventListener('DOMContentLoaded', () => {
+      body.classList.add('fade-in');
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && !href.startsWith('http') && !href.startsWith('#') && !href.includes('target="_blank"')) {
+            e.preventDefault();
+            body.classList.add('fade-out');
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

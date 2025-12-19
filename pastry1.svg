@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 200 150">
+  <rect x="70" y="90" width="60" height="50" fill="#ffd700"/>
+  <rect x="60" y="80" width="80" height="10" fill="#ff6347"/>
+  <text x="100" y="115" text-anchor="middle" fill="#8b0000" font-size="10">Wypiek</text>
+</svg>
