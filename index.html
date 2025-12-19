@@ -7,8 +7,15 @@
   <title>Cukiernia Ryszard Gembiak</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="cukiernia.css">
+  <style>
+    /* Background canvas sits under content and doesn't block interactions */
+    #bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none}
+    /* Ensure page content renders above the canvas */
+    body > *:not(#bg-canvas){position:relative;z-index:1}
+  </style>
 </head>
 <body>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#">
@@ -16,12 +23,12 @@
         Cukiernia Ryszard Gembiak
       </a>
       <nav class="nav">
-        <a href="#about">O nas</a>
-        <a href="oferta/index.html">Oferta</a>
-        <a href="information">Informacje</a>
-        <a href="#gallery">Galeria</a>
-        <a href="#contact">Kontakt</a>
+        <a href="o-nas/o-nas.html">O nas</a>
+        <a href="oferta/oferta.html">Oferta</a>
+        <a href="galeria/galeria.html">Galeria</a>
+        <a href="kontakt/kontakt.html">Kontakt</a>
       </nav>
+      <button id="theme-toggle" class="theme-btn">🌙</button>
     </div>
   </header>
 
@@ -32,8 +39,8 @@
           <h1>Świeże wypieki codziennie</h1>
           <p>Domowe smaki, najlepsze składniki i miłość do pieczenia. Zapraszamy do Cukierni Ryszard Gembiak.</p>
           <div class="hero-cta">
-            <a class="btn primary" href="#menu">Zobacz Menu</a>
-            <a class="btn ghost" href="#contact">Zamów online</a>
+            <a class="btn primary" href="oferta/oferta.html">Zobacz Ofertę</a>
+            <a class="btn ghost" href="kontakt/kontakt.html">Zamów online</a>
           </div>
         </div>
         <div class="hero-art">
@@ -109,8 +116,130 @@
     </div>
   </footer>
 
+  <script type="module">
+    import * as THREE from 'https://unpkg.com/three@0.152.2/build/three.module.js';
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || window.innerWidth < 600) {
+      console.log('3D background disabled for reduced motion or small screen');
+    } else {
+      const canvas = document.getElementById('bg-canvas');
+      const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 1.5, 6);
+
+      const hemi = new THREE.HemisphereLight(0xffffff, 0x444444, 0.7);
+      scene.add(hemi);
+      const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+      dir.position.set(5, 10, 7);
+      scene.add(dir);
+
+      function createCake(radius, height, color) {
+        const g = new THREE.Group();
+        const bodyMat = new THREE.MeshStandardMaterial({color});
+        const body = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, height, 32), bodyMat);
+        g.add(body);
+        const icing = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.96, radius * 0.96, height * 0.18, 32), new THREE.MeshStandardMaterial({color: 0xfff7e6, metalness: 0.1, roughness: 0.6}));
+        icing.position.y = height * 0.45;
+        g.add(icing);
+        const cherry = new THREE.Mesh(new THREE.SphereGeometry(radius * 0.14, 16, 16), new THREE.MeshStandardMaterial({color: 0xff3b5c}));
+        cherry.position.set(0, height * 0.75, 0);
+        g.add(cherry);
+        return g;
+      }
+
+      const cakes = new THREE.Group();
+      scene.add(cakes);
+      const palette = [0xffb3b3, 0xffd1a9, 0xfff2a6, 0xc6f0d9, 0xd6ccff];
+      for (let i = 0; i < 6; i++) {
+        const r = 0.6 + Math.random() * 0.6;
+        const h = 0.6 + Math.random() * 0.6;
+        const cake = createCake(r, h, palette[i % palette.length]);
+        cake.position.x = (Math.random() - 0.5) * 8;
+        cake.position.y = (Math.random() - 0.5) * 3;
+        cake.position.z = -Math.random() * 6;
+        cake.rotation.x = (Math.random() - 0.5) * 0.4;
+        cake.userData.speed = 0.002 + Math.random() * 0.004;
+        cakes.add(cake);
+      }
+
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('mousemove', (e) => {
+        const nx = (e.clientX / window.innerWidth - 0.5) * 2;
+        const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+        mouseX = nx;
+        mouseY = ny;
+      }, {passive: true});
+
+      let lastScroll = window.scrollY;
+      window.addEventListener('scroll', () => { lastScroll = window.scrollY; }, {passive: true});
+
+      function resize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      }
+      window.addEventListener('resize', resize, {passive: true});
+
+      function animate(t) {
+        requestAnimationFrame(animate);
+        const scrollFactor = (lastScroll / (document.body.scrollHeight - window.innerHeight)) || 0;
+        cakes.children.forEach((c, idx) => {
+          c.rotation.y += c.userData.speed;
+          c.position.y += Math.sin(t * 0.001 * (idx + 1)) * 0.0005;
+        });
+        cakes.position.x += (mouseX * 2 - cakes.position.x) * 0.05;
+        cakes.position.y += (-scrollFactor * 4 - cakes.position.y) * 0.05;
+        camera.lookAt(0, 0, 0);
+        renderer.render(scene, camera);
+      }
+      requestAnimationFrame(animate);
+    }
+  </script>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+      body.classList.add('dark');
+      themeToggle.textContent = '☀️';
+    } else {
+      themeToggle.textContent = '🌙';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const theme = body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Smooth page transitions
+    document.addEventListener('DOMContentLoaded', () => {
+      body.classList.add('fade-in');
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
+          if (href && !href.startsWith('http') && !href.startsWith('#') && !href.includes('target="_blank"')) {
+            e.preventDefault();
+            body.classList.add('fade-out');
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300);
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
